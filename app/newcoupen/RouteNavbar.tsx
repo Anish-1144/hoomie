@@ -26,7 +26,7 @@ export default function RouteNavbar() {
           <ShimmerButton
             className="relative z-10 px-4 py-2 text-xs font-semibold uppercase tracking-wide shadow-lg sm:text-sm"
             onClick={() => {
-              window.location.href = "http://localhost:3000";
+              window.location.href = "https://prelaunch.ninexhoomie.com/";
             }}
           >
             Visit site

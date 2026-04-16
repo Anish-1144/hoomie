@@ -57,25 +57,11 @@ export default function NewFooter() {
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
                 Contact
               </p>
-              <p className="max-w-md text-sm font-semibold leading-relaxed text-zinc-900">
-                353 MR3 ROAD MAHALAKSMI NAGAR INDORE
-              </p>
               <a
                 href="tel:9243143997"
                 className="block text-sm font-semibold text-zinc-900 hover:underline"
               >
                 9243143997
-              </a>
-             
-              
-            
-              <a
-                href="https://prelaunch.ninexhoomie.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-sm font-semibold text-zinc-900 hover:underline"
-              >
-                prelaunch.ninexhoomie.com
               </a>
               <p className="max-w-lg text-sm leading-relaxed text-zinc-700">
                 ninexhoomie - integrated PMS, POS & payments for hotels and

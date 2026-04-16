@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-
 export default function Footer() {
   const router = useRouter();
   return (
@@ -15,7 +14,13 @@ export default function Footer() {
               onClick={() => router.push("/")}
               className="flex shrink-0 items-center rounded-lg outline-none ring-orange-500/0 transition hover:opacity-90 focus-visible:ring-4 focus-visible:ring-orange-500/20"
             >
-              <Image src="/ninexhoomieLogo.png" alt="Ninex Hoomie" width={220} height={72} className="h-8 w-auto object-contain bg-white" />
+              <Image
+                src="/ninexhoomieLogo.png"
+                alt="Ninex Hoomie"
+                width={220}
+                height={72}
+                className="h-8 w-auto object-contain bg-white"
+              />
             </button>
             <p className="mt-2 text-xs text-gray-400">
               Ninex Hoomie by Ninexfold Agency LLP
@@ -25,11 +30,17 @@ export default function Footer() {
           <div className="hidden h-12 w-px bg-gray-700 md:block" />
 
           <div className="flex flex-1 flex-wrap items-center gap-x-6 gap-y-3 text-sm text-gray-300">
-            <a href="tel:9243143997" className="transition hover:text-orange-400">
+            <a
+              href="tel:9243143997"
+              className="transition hover:text-orange-400"
+            >
               9243143997
             </a>
-            <a href="mailto:hoomie@ninexfold.com" className="transition hover:text-orange-400">
-              hoomie@ninexfold.com
+            <a
+              href="mailto:prelaunch.ninexhoomie.com"
+              className="transition hover:text-orange-400"
+            >
+              prelaunch.ninexhoomie.com
             </a>
           </div>
 

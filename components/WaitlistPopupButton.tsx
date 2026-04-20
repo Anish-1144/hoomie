@@ -40,7 +40,7 @@ export default function WaitlistPopupButton({
 
       {mounted && showPopup &&
         createPortal(
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/55 px-4 py-8 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 overflow-y-auto scrollbar-none bg-black/55 px-4 py-8 backdrop-blur-sm">
           <div className="mx-auto w-full max-w-3xl">
             <WaitlistForm
               mode="popup"

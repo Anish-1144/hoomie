@@ -8,6 +8,7 @@ import {
   BedDouble,
   Building2,
   Check,
+  Hotel,
   House,
   Mail,
   MapPin,
@@ -58,6 +59,7 @@ export default function WaitlistForm({
     email: initialEmail,
     phone: "",
     hotelLocationCity: "",
+    hotelName: "",
     totalProperties: "",
     totalRooms: "",
     currentPmsName: "",
@@ -71,7 +73,17 @@ export default function WaitlistForm({
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "phone") {
+      setForm((prev) => ({ ...prev, phone: value.replace(/\D/g, "").slice(0, 15) }));
+      return;
+    }
+    if (name === "totalProperties" || name === "totalRooms") {
+      const digits = value.replace(/\D/g, "");
+      setForm((prev) => ({ ...prev, [name]: digits }));
+      return;
+    }
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -105,6 +117,7 @@ export default function WaitlistForm({
           email: initialEmail,
           phone: "",
           hotelLocationCity: "",
+          hotelName: "",
           totalProperties: "",
           totalRooms: "",
           currentPmsName: "",
@@ -169,7 +182,7 @@ export default function WaitlistForm({
               <div className={`border-b border-[#e8c9a9] ${mode === "popup" ? "mb-5 pb-4" : "mb-7 pb-6"}`}>
                 <h3 className="text-2xl font-bold text-[#2f1f15]">Join the Waitlist</h3>
                 <p className="mt-1 text-sm text-[#7a5d49]">
-                  Get early access and lock in founder pricing — takes 2 minutes.
+                  Get early access and lock in founder pricing , takes 2 minutes.
                 </p>
               </div>
 
@@ -205,9 +218,14 @@ export default function WaitlistForm({
                     <input
                       id="phone"
                       name="phone"
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel"
+                      pattern="[0-9]*"
+                      required
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="+91 98765 43210"
+                      placeholder="10 digit mobile number"
                       className={inputClass}
                     />
                   </Field>
@@ -224,16 +242,28 @@ export default function WaitlistForm({
                 </div>
 
                 {/* Row 3 */}
-                <Field label="Current PMS Name" icon={<Building2 className="h-full w-full" />}>
-                  <input
-                    id="currentPmsName"
-                    name="currentPmsName"
-                    value={form.currentPmsName}
-                    onChange={handleChange}
-                    placeholder="e.g. Opera, Cloudbeds, eZee…"
-                    className={inputClass}
-                  />
-                </Field>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <Field label="Hotel name" icon={<Hotel className="h-full w-full" />}>
+                    <input
+                      id="hotelName"
+                      name="hotelName"
+                      value={form.hotelName}
+                      onChange={handleChange}
+                      placeholder="Your hotel name"
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Current PMS Name" icon={<Building2 className="h-full w-full" />}>
+                    <input
+                      id="currentPmsName"
+                      name="currentPmsName"
+                      value={form.currentPmsName}
+                      onChange={handleChange}
+                      placeholder="e.g. Opera, Cloudbeds, eZee…"
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
 
                 {/* Row 4 */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -241,8 +271,11 @@ export default function WaitlistForm({
                     <input
                       id="totalProperties"
                       name="totalProperties"
-                      type="number"
-                      min="1"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      minLength={1}
+                      required
                       value={form.totalProperties}
                       onChange={handleChange}
                       placeholder="1"
@@ -253,8 +286,11 @@ export default function WaitlistForm({
                     <input
                       id="totalRooms"
                       name="totalRooms"
-                      type="number"
-                      min="1"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      minLength={1}
+                      required
                       value={form.totalRooms}
                       onChange={handleChange}
                       placeholder="50"

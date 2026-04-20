@@ -21,7 +21,13 @@ export default function NewCoupenPage() {
   const [couponCode, setCouponCode] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    if (name === "phone") {
+      const digitsOnly = value.replace(/\D/g, "");
+      setForm((f) => ({ ...f, phone: digitsOnly }));
+      return;
+    }
+    setForm((f) => ({ ...f, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -223,10 +229,14 @@ export default function NewCoupenPage() {
                         </span>
                         <input
                           name="phone"
+                          type="tel"
+                          inputMode="numeric"
+                          autoComplete="tel"
+                          pattern="[0-9]*"
                           value={form.phone}
                           onChange={handleChange}
                           required
-                          placeholder="+91 …"
+                          placeholder="10 digit mobile number"
                           className={inputClass}
                         />
                       </label>

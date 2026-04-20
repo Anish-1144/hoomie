@@ -30,12 +30,7 @@ export default function Footer() {
           <div className="hidden h-12 w-px bg-gray-700 md:block" />
 
           <div className="flex flex-1 flex-wrap items-center gap-x-6 gap-y-3 text-sm text-gray-300">
-            <a
-              href="tel:9243143997"
-              className="transition hover:text-orange-400"
-            >
-              9243143997
-            </a>
+            
             <a
               href="mailto:prelaunch.ninexhoomie.com"
               className="transition hover:text-orange-400"

@@ -1,13 +1,34 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Check } from "lucide-react";
 
-export default function ThankYouPage() {
+/* 🔹 Separate component for coupon */
+function CouponCode() {
   const searchParams = useSearchParams();
-  const couponCode = searchParams.get("code") || "";
+  const couponCode = searchParams.get("code");
 
+  return (
+    <div className="mt-3 flex items-center justify-between">
+      <span className="text-2xl font-mono font-bold text-orange-600 tracking-wider">
+        {couponCode || "Check your email"}
+      </span>
+
+      {couponCode && (
+        <button
+          onClick={() => navigator.clipboard.writeText(couponCode)}
+          className="text-sm font-medium text-orange-500 hover:underline"
+        >
+          Copy
+        </button>
+      )}
+    </div>
+  );
+}
+
+export default function ThankYouPage() {
   return (
     <main className="min-h-screen bg-[#fafafa] flex items-center justify-center px-4">
       <div className="w-full max-w-md rounded-3xl bg-white p-6 sm:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-slate-200">
@@ -20,9 +41,10 @@ export default function ThankYouPage() {
         </div>
 
         {/* Heading */}
-        <h1 className="mt-5 text-4xl sm:text-4xl font-bold leading-tight">
-          You're in. <br />
-          <span className="text-orange-600">Welcome to Ninex Hoomie </span>
+        <h1 className="mt-5 text-4xl font-bold leading-tight">
+          {"You're in."}
+          <br />
+          <span className="text-orange-600">Welcome to Ninex Hoomie 🚀</span>
         </h1>
 
         <p className="mt-3 text-slate-600 text-base leading-relaxed">
@@ -40,20 +62,12 @@ export default function ThankYouPage() {
               Early Access Pass
             </p>
 
-            <div className="mt-3 flex items-center justify-between">
-              <span className="text-2xl font-mono font-bold text-orange-600 tracking-wider">
-                {couponCode || "Check your email"}
-              </span>
-
-              {couponCode && (
-                <button
-                  onClick={() => navigator.clipboard.writeText(couponCode)}
-                  className="text-sm font-medium text-orange-500 hover:underline"
-                >
-                  Copy
-                </button>
-              )}
-            </div>
+            {/* ✅ Suspense wrapper */}
+            <Suspense
+              fallback={<p className="mt-3 text-slate-400">Loading...</p>}
+            >
+              <CouponCode />
+            </Suspense>
 
             <div className="my-4 border-t border-dashed border-orange-200" />
 

@@ -3,11 +3,11 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   BedDouble,
   Building2,
-  Check,
   Hotel,
   House,
   Mail,
@@ -54,6 +54,7 @@ export default function WaitlistForm({
   initialEmail = "",
   onClose,
 }: WaitlistFormProps) {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: initialEmail,
@@ -67,8 +68,6 @@ export default function WaitlistForm({
   });
 
   const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [couponCode, setCouponCode] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -110,8 +109,7 @@ export default function WaitlistForm({
 
       if (res.ok) {
         const responseData = await res.json().catch(() => null);
-        setCouponCode(getCouponCode(responseData));
-        setShowSuccess(true);
+        const code = getCouponCode(responseData);
         setForm({
           name: "",
           email: initialEmail,
@@ -123,6 +121,7 @@ export default function WaitlistForm({
           currentPmsName: "",
           featureRequest: "",
         });
+        router.push(code ? `/thankyou?code=${encodeURIComponent(code)}` : "/thankyou");
       } else {
         alert("Something went wrong. Please try again.");
       }
@@ -345,50 +344,6 @@ export default function WaitlistForm({
           </div>
         </div>
       </section>
-
-      {/* ── SUCCESS MODAL ── */}
-      {showSuccess && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white p-8 text-center shadow-2xl">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-              <Check className="h-8 w-8 text-orange-600" strokeWidth={2.5} />
-            </div>
-            <h3 className="mb-2 text-2xl font-bold text-slate-900">You&apos;re on the list! 🎉</h3>
-            <p className="mb-7 text-sm leading-relaxed text-slate-500">
-              Thanks for signing up. We&apos;ve received your details and will be in
-              touch with your exclusive onboarding invite very soon.
-            </p>
-            {couponCode ? (
-              <div className="mb-6 rounded-xl border border-orange-200 bg-orange-50 px-4 py-3">
-                <p className="text-xs font-semibold uppercase tracking-wider text-orange-500">
-                  Your Coupon Code
-                </p>
-                <p className="mt-1 text-xl font-extrabold text-orange-600">{couponCode}</p>
-                <p className="mt-1 text-xs text-slate-500">
-                  Same coupon is shared on your email.
-                </p>
-              </div>
-            ) : (
-              <p className="mb-6 text-xs text-slate-500">
-                Coupon has been shared on your email.
-              </p>
-            )}
-            <button
-              onClick={() => {
-                setShowSuccess(false);
-                if (mode === "popup") {
-                  onClose?.();
-                  return;
-                }
-                window.location.href = "/";
-              }}
-              className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-8 py-3 text-sm font-semibold text-white shadow-md shadow-green-100 transition hover:bg-orange-600 active:scale-[0.98]"
-            >
-              {mode === "popup" ? "Close" : "Back to Home"}
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

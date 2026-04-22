@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Check } from "lucide-react";
-
+import { Sparkles } from "lucide-react";
 /* 🔹 Separate component for coupon */
 function CouponCode() {
   const searchParams = useSearchParams();
@@ -44,7 +44,10 @@ export default function ThankYouPage() {
         <h1 className="mt-5 text-4xl font-bold leading-tight">
           {"You're in."}
           <br />
-          <span className="text-orange-600">Welcome to Ninex Hoomie 🚀</span>
+          <span className="text-orange-600">
+            Welcome to Ninex Hoomie{" "}
+            <Sparkles className="inline h-5 w-5 ml-1 animate-pulse" />
+          </span>
         </h1>
 
         <p className="mt-3 text-slate-600 text-base leading-relaxed">
